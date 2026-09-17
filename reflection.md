@@ -44,10 +44,18 @@
 - Briefly describe your initial UML design.
 - What classes did you include, and what responsibilities did you assign to each?
 
+        The initial UML design has the relationships: 
+            - ScheduleManager to Pet (1-to-many): The manager holds a collection of pets registered in the application.
+            - ScheduleManager to Task (1-to-many): The manager holds and processes all scheduled care tasks across all pets.
+
+        I chose the classes Pet, Task, and ScheduleManager. Pet holds the responsibility of gathering important information (name, id, type, etc.) about each pet that needs to be cared for. Task holds the responsibility of adding tasks tied to each pet as well as giving each a scheduled time and priority. It also allows for each task to be marked completed when done. ScheduleManager holds the resposibility of adding new pets and tasks to the daily schdule. It also generates a daily plan with all taks that need to get done that day. 
+
 **b. Design changes**
 
 - Did your design change during implementation?
 - If yes, describe at least one change and why you made it.
+
+        Yes, after asking my AI agent to look for pitfall in the code, one of the suggestions it made was to add data validation on schdeuling. There is now a check inside schedule_task() to verify that pet_id exists before it adds a task, this prevents adding a task for a non-existent pet.
 
 ---
 
