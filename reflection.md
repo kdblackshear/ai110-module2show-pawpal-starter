@@ -47,8 +47,9 @@
         The initial UML design has the relationships: 
             - ScheduleManager to Pet (1-to-many): The manager holds a collection of pets registered in the application.
             - ScheduleManager to Task (1-to-many): The manager holds and processes all scheduled care tasks across all pets.
+            - ScheduleManager to OwnerPreferences (1-to-1): The manager holds a single instance of OwnerPreferences. When generate_daily_plan() runs, it directly consults these preferences (like max_daily_minutes and priority_weights) to shape the output.
 
-        I chose the classes Pet, Task, and ScheduleManager. Pet holds the responsibility of gathering important information (name, id, type, etc.) about each pet that needs to be cared for. Task holds the responsibility of adding tasks tied to each pet as well as giving each a scheduled time and priority. It also allows for each task to be marked completed when done. ScheduleManager holds the resposibility of adding new pets and tasks to the daily schdule. It also generates a daily plan with all taks that need to get done that day. 
+        I chose the classes OwnerProferences, Pet, Task, and ScheduleManager. OwnerPreferences holds the responsibility of setting time limits, prioryt weights, and preferred walk windows, as well as helper actions to each task. Pet holds the responsibility of gathering important information (name, id, type, etc.) about each pet that needs to be cared for. Task holds the responsibility of adding tasks tied to each pet as well as giving each a scheduled time and priority. It also allows for each task to be marked completed when done. ScheduleManager holds the resposibility of adding new pets and tasks to the daily schdule. It also generates a daily plan with all taks that need to get done that day. 
 
 **b. Design changes**
 

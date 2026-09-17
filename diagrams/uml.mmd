@@ -1,12 +1,18 @@
 classDiagram
-    %% Replace the placeholders below with your actual classes, attributes, methods, and relationships.
-    %% Keep this file updated so it matches your final implementation.
+    class OwnerPreferences {
+        +int max_daily_minutes
+        +Dict priority_weights
+        +List preferred_walk_windows
+        +update_max_minutes(new_limit)
+        +add_walk_window(start, end)
+    }
 
     class Pet {
         +String pet_id
         +String name
         +String type
         +String special_notes
+        +List tasks
         +update_notes(new_notes)
         +get_profile_summary()
     }
@@ -26,9 +32,9 @@ classDiagram
     }
 
     class ScheduleManager {
-        +List pets
+        +Dict pets
         +List tasks
-        +Dict constraints
+        +OwnerPreferences preferences
         +add_pet(pet_object)
         +schedule_task(task_object)
         +get_todays_tasks()
@@ -37,3 +43,4 @@ classDiagram
 
     ScheduleManager "1" --> "*" Pet : manages
     ScheduleManager "1" --> "*" Task : tracks
+    ScheduleManager "1" --> "1" OwnerPreferences : uses

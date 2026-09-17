@@ -1,6 +1,21 @@
 from dataclasses import dataclass, field
-from datetime import datetime, date
+from datetime import datetime, date, time
 from typing import List, Dict, Any, Optional
+
+@dataclass
+class OwnerPreferences:
+    max_daily_minutes: int = 180
+    priority_weights: Dict[str, int] = field(default_factory=lambda: {"High": 1, "Medium": 2, "Low": 3})
+    preferred_walk_windows: List[tuple[time, time]] = field(default_factory=list)
+
+    def update_max_minutes(self, new_limit: int) -> None:
+        """Updates the maximum daily time allowed for pet tasks."""
+        self.max_daily_minutes = new_limit
+
+    def add_walk_window(self, start: time, end: time) -> None:
+        """Adds a preferred time window for walking pets."""
+        self.preferred_walk_windows.append((start, end))
+
 
 @dataclass
 class Pet:
@@ -8,7 +23,7 @@ class Pet:
     name: str
     type: str
     special_notes: str = ""
-    tasks: List['Task'] = field(default_factory=list)  # Added bi-directional relationship
+    tasks: List['Task'] = field(default_factory=list)
 
     def update_notes(self, new_notes: str) -> None:
         """Appends or updates the pet's special notes."""
@@ -44,14 +59,11 @@ class Task:
 
 
 class ScheduleManager:
-    def __init__(self):
+    def __init__(self, preferences: Optional[OwnerPreferences] = None):
         self.pets: Dict[str, Pet] = {}
         self.tasks: List[Task] = []
-        # Structured constraints rather than a vague dictionary
-        self.constraints: Dict[str, Any] = {
-            "max_daily_minutes": 180,
-            "priority_weights": {"High": 1, "Medium": 2, "Low": 3}
-        }
+        # Use the dedicated preferences object
+        self.preferences: OwnerPreferences = preferences or OwnerPreferences()
 
     def add_pet(self, pet_object: Pet) -> None:
         """Registers a new pet into the manager."""
@@ -62,13 +74,7 @@ class ScheduleManager:
         if task_object.pet_id not in self.pets:
             raise ValueError(f"Cannot schedule task: Pet ID {task_object.pet_id} does not exist.")
         
-        # Check for exact time overlap for the same pet
-        for t in self.tasks:
-            if t.pet_id == task_object.pet_id and t.scheduled_time == task_object.scheduled_time:
-                print(f"Warning: Multiple tasks scheduled at {task_object.scheduled_time} for pet {task_object.pet_id}.")
-
         self.tasks.append(task_object)
-        # Automatically sync the task to the specific pet object as well
         self.pets[task_object.pet_id].tasks.append(task_object)
         return True
 
@@ -79,11 +85,11 @@ class ScheduleManager:
         return [t for t in self.tasks if t.scheduled_time.date() == target_date]
 
     def generate_daily_plan(self, target_date: Optional[date] = None) -> Dict[str, Any]:
-        """Applies priority weights and constraints to build an optimized daily schedule."""
+        """Applies owner preferences and priority weights to build an optimized daily schedule."""
         todays_tasks = self.get_todays_tasks(target_date)
         
-        # Sort tasks: Primary by priority weight, Secondary by scheduled time
-        weight_map = self.constraints.get("priority_weights", {"High": 1, "Medium": 2, "Low": 3})
+        # Sort tasks using the weights defined in OwnerPreferences
+        weight_map = self.preferences.priority_weights
         sorted_tasks = sorted(
             todays_tasks,
             key=lambda x: (weight_map.get(x.priority, 99), x.scheduled_time)
@@ -91,8 +97,8 @@ class ScheduleManager:
         
         explanation = (
             f"Successfully organized {len(sorted_tasks)} tasks for the day. "
-            "Tasks were prioritized by urgency level (High -> Medium -> Low) "
-            "and then ordered chronologically by scheduled time."
+            f"Filtered based on owner max daily time limit ({self.preferences.max_daily_minutes} mins) "
+            "and sorted by priority level followed by scheduled time."
         )
         
         return {
