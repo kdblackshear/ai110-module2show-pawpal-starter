@@ -2,6 +2,43 @@
 
 ## 1. System Design
 
+        A user should be able to add a pet, schedule a task (walk, feeding, grooming, etc.), and see the entirety of the day's scheduled tasks.
+
+        To do this, we would need the classes:
+            1. Pet:
+                ~ Attributes: 
+                    - pet_id
+                    - name
+                    - type
+                    - special_notes
+                ~ Methods: 
+                    - update_notes(new_notes)
+                    - get_profile_summary()
+            2. Task:
+                ~ Attributes:
+                    - task_id
+                    - pet_id
+                    - title
+                    - category
+                    - duration_minutes
+                    - priority
+                    - scheduled_time
+                    - is_completed
+                ~ Methods: 
+                    - mark_completed()
+                    - reschedule(new_time)
+                    - update_priority(new_priority)
+            3. ScheduleManager:
+                ~ Attributes: 
+                    - pets
+                    - tasks
+                    - constraints
+                ~ Methods:
+                    - add_pet(pet_object)
+                    - schedule_task(task_object)
+                    - get_todays_tasks()
+                    - generate_daily_plan()
+
 **a. Initial design**
 
 - Briefly describe your initial UML design.
