@@ -92,7 +92,7 @@ def main():
         pet_name = pet_obj.name if pet_obj else "Unknown Pet"
         time_str = task.scheduled_time.strftime("%I:%M %p")
         
-        print(f"{i}. [{task.priority.upper()}] {task.title or task.description} ({time_str})")
+        print(f"{i}. [{task.priority.upper()}] {task.description} ({time_str})")
         print(   f"   • Pet: {pet_name}")
         print(   f"   • Category: {task.category} | Duration: {task.duration_minutes} mins")
         print(   f"   • Details: {task.description}")
