@@ -22,7 +22,7 @@ class Task:
     is_completed: bool = False
 
     def mark_completed(self) -> None:
-        """Sets the task status to finished."""
+        """Sets task status to finished."""
         self.is_completed = True
 
     def reschedule(self, new_time: datetime) -> None:
@@ -30,7 +30,7 @@ class Task:
         self.scheduled_time = new_time
 
     def update_priority(self, new_priority: str) -> None:
-        """Changes the priority level of the task."""
+        """Changes task priority level."""
         self.priority = new_priority
 
 
@@ -43,11 +43,11 @@ class Pet:
     tasks: List[Task] = field(default_factory=list)  # List of tasks for this pet
 
     def update_notes(self, new_notes: str) -> None:
-        """Appends or updates the pet's special notes."""
+        """Updates special notes for the pet."""
         self.special_notes = new_notes
 
     def get_profile_summary(self) -> str:
-        """Returns a formatted summary of the pet's details."""
+        """Returns a formatted summary of pet details."""
         return f"Pet: {self.name} ({self.type}) - Notes: {self.special_notes or 'None'}"
 
 
@@ -63,7 +63,7 @@ class Owner:
         self.pets[pet.pet_id] = pet
 
     def get_all_tasks(self) -> List[Task]:
-        """Provides access to all tasks across all managed pets."""
+        """Returns all tasks across all managed pets."""
         all_tasks = []
         for pet in self.pets.values():
             all_tasks.extend(pet.tasks)
@@ -76,11 +76,11 @@ class Scheduler:
         self.owner: Owner = owner or Owner(owner_id="o1", name="Primary Owner")
 
     def add_pet(self, pet_object: Pet) -> None:
-        """Registers a new pet into the owner's household."""
+        """Registers a new pet into the owner household."""
         self.owner.add_pet(pet_object)
 
     def schedule_task(self, task_object: Task) -> bool:
-        """Adds a new care task to the correct pet with validation."""
+        """Adds a new care task to the specified pet with validation."""
         if task_object.pet_id not in self.owner.pets:
             raise ValueError(f"Cannot schedule task: Pet ID {task_object.pet_id} does not exist.")
         
@@ -88,7 +88,7 @@ class Scheduler:
         return True
 
     def get_todays_tasks(self, target_date: Optional[date] = None) -> List[Task]:
-        """Retrieves and filters tasks scheduled for the specified date."""
+        """Filters and returns tasks scheduled for the target date."""
         if target_date is None:
             target_date = datetime.now().date()
         
@@ -96,7 +96,7 @@ class Scheduler:
         return [t for t in all_tasks if t.scheduled_time.date() == target_date]
 
     def generate_daily_plan(self, target_date: Optional[date] = None) -> Dict[str, Any]:
-        """Organizes tasks across pets based on priority and time constraints."""
+        """Builds an optimized daily schedule based on priorities and constraints."""
         todays_tasks = self.get_todays_tasks(target_date)
         
         weight_map = self.owner.preferences.priority_weights
