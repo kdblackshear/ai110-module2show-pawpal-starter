@@ -81,7 +81,14 @@ Successfully scheduled 3 tasks across pets.
 
 ```bash
 # Run the full test suite:
-pytest
+python3 -m pytest
+
+Covers: 
+   ~ State & Mutation: Basic task completion (test_task_completion) and household collection tracking (test_task_addition_increases_count).
+
+   ~ Core Algorithms: Chronological task sorting (test_sorting_correctness).
+
+   ~ Automation & Safety: Automated recurring task generation (test_recurrence_logic_daily_task) and non-blocking time conflict detection (test_conflict_detection_flags_overlapping_times).
 
 # Run with coverage:
 pytest --cov
@@ -90,8 +97,18 @@ pytest --cov
 Sample test output:
 
 ```
-# Paste your pytest output here
+Kahlyns-MacBook-Air:ai110-module2show-pawpal-starter kahlynblackshear$ python3 -m pytest
+============================= test session starts =============================
+platform darwin -- Python 3.14.7, pytest-9.1.1, pluggy-1.6.0
+rootdir: /Users/kahlynblackshear/Documents/GitHub/ai110-module2show-pawpal-starter
+plugins: anyio-4.14.2
+collected 5 items                                                             
+
+tests/test_pawpal.py .....                                              [100%]
+
+============================== 5 passed in 0.03s ==============================
 ```
+Confidence Level: 5 Stars
 
 ## 📐 Smarter Scheduling
 
