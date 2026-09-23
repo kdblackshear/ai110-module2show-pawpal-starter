@@ -1,0 +1,57 @@
+classDiagram
+    class OwnerPreferences {
+        +int max_daily_minutes
+        +Dict priority_weights
+        +List preferred_walk_windows
+    }
+
+    class Task {
+        +String task_id
+        +String pet_id
+        +String description
+        +String category
+        +int duration_minutes
+        +String priority
+        +DateTime scheduled_time
+        +String frequency
+        +bool is_completed
+        +mark_completed()
+        +reschedule(new_time)
+        +update_priority(new_priority)
+    }
+
+    class Pet {
+        +String pet_id
+        +String name
+        +String type
+        +String special_notes
+        +List tasks
+        +update_notes(new_notes)
+        +get_profile_summary()
+    }
+
+    class Owner {
+        +String owner_id
+        +String name
+        +OwnerPreferences preferences
+        +Dict pets
+        +add_pet(pet)
+        +get_all_tasks()
+    }
+
+    class Scheduler {
+        +Owner owner
+        +add_pet(pet_object)
+        +check_time_conflict(new_task)
+        +schedule_task(task_object)
+        +get_todays_tasks(target_date)
+        +sort_by_time(tasks)
+        +filter_tasks(is_completed, pet_name)
+        +complete_task(task_id)
+        +generate_daily_plan(target_date)
+    }
+
+    Scheduler "1" --> "1" Owner : references
+    Owner "1" --> "*" Pet : manages
+    Owner "1" --> "1" OwnerPreferences : uses
+    Pet "1" --> "*" Task : tracks
