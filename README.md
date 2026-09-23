@@ -99,10 +99,10 @@ Sample test output:
 
 | Feature | Method(s) | Notes |
 |---------|-----------|-------|
-| Task sorting | | e.g., by priority, duration |
-| Filtering | | e.g., skip tasks if time runs out |
-| Conflict handling | | e.g., overlapping time slots |
-| Recurring tasks | | e.g., daily vs. weekly |
+| Task sorting | Scheduler.sort_by_time(), Scheduler.generate_daily_plan() | Organizes tasks chronologically and resolves ties using weighted priority levels. |
+| Filtering | Scheduler.filter_tasks() | Optimized single-pass filter that simultaneously queries tasks by completion status and/or pet name.|
+| Conflict handling | Scheduler.check_time_conflict(), Scheduler.schedule_task() | Performs lightweight interval overlap detection and uses a non-blocking warning approach so owners can manually double-book during emergencies. |
+| Recurring tasks | Scheduler.complete_task() | Automatically generates and schedules the next task instance when a "Daily" or "Weekly" task is marked completed. |
 
 ## 📸 Demo Walkthrough
 

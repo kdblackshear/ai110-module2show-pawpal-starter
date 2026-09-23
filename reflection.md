@@ -72,6 +72,7 @@
 - Describe one tradeoff your scheduler makes.
 - Why is that tradeoff reasonable for this scenario?
 
+        One of the tradeoffs that my scheduler makes is that instead of outright rejecting an overlapping task, it will print a warning message and add the task anyway. This is reasonable for this scenario because it makes the scheduler more flexible for the user, which most aligns with daily life that has unexpected events, like emergency vet visits that may override a scheduled walk.  
 ---
 
 ## 3. AI Collaboration
