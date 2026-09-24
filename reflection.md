@@ -67,6 +67,8 @@
 - What constraints does your scheduler consider (for example: time, priority, preferences)?
 - How did you decide which constraints mattered most?
 
+        My scheduler considers the constraints: pet validity, daily capacity limit, time availability, and task frequency. I decided these constraints mattered the most because it ensures that each pet it recieving the best care and allows the app to mirror the same flexibility and unpredictability of daily life/schedules.
+
 **b. Tradeoffs**
 
 - Describe one tradeoff your scheduler makes.
@@ -82,10 +84,14 @@
 - How did you use AI tools during this project (for example: design brainstorming, debugging, refactoring)?
 - What kinds of prompts or questions were most helpful?
 
+        I used AI for designing, debugging, refactoring, and testing the code for this project. The most helpful prompts were those that asked how can I improve this section of code or what can be added to better serve the user of the app. 
+
 **b. Judgment and verification**
 
 - Describe one moment where you did not accept an AI suggestion as-is.
 - How did you evaluate or verify what the AI suggested?
+
+        There was a moment when updating test_pawpal.py where the AI suggestion for my pytests did not test exactly what was I was looking to test. I determined this simply by looking at the code it suggested and seeing that it did not match my criteria. After that, I re-prompted the AI assistant with specific test cases I wanted and it suggested a pytest that was better in line with what I wanted. 
 
 ---
 
@@ -96,10 +102,20 @@
 - What behaviors did you test?
 - Why were these tests important?
 
+        I tested:
+            ~ State & Mutation: Basic task completion (test_task_completion) and household collection tracking (test_task_addition_increases_count).
+
+             ~ Core Algorithms: Chronological task sorting (test_sorting_correctness).
+
+             ~ Automation & Safety: Automated recurring task generation (test_recurrence_logic_daily_task) and non-blocking time conflict detection (test_conflict_detection_flags_overlapping_times).
+        These tests are important because they ensure that each component of the app works well with different information and edge cases, which lends to the overall functionality of the program. 
+
 **b. Confidence**
 
 - How confident are you that your scheduler works correctly?
 - What edge cases would you test next if you had more time?
+
+        I am very confident that my scheduler works correctly. If I had more time, I would test the edge cases: an orphaned task guard, weekly recurrence expansion, unmapped priority fallback, and zero match multifiltering.
 
 ---
 
@@ -109,10 +125,16 @@
 
 - What part of this project are you most satisfied with?
 
+        I am most satisfied with my scheduler class in pawpal_system.py. I think it has a robust collection of features that will serve the user well while using the app and makes the experience much more positive. 
+
 **b. What you would improve**
 
 - If you had another iteration, what would you improve or redesign?
 
+        If I had another iteration, I would maybe take the time to add a feture where you can add a picture of the pet along with their other information. I think this would be a cool way to further personalize the scheduler. 
+
 **c. Key takeaway**
 
 - What is one important thing you learned about designing systems or working with AI on this project?
+
+        An important thing I learned about designing. systems and working with AI is the value of using object oriented principles while developing a program. I also learned that coding alongside of AI can make the process much easier and more effiecient and shouldn't be something to be shied away from.
